@@ -1,4 +1,4 @@
-name: CI/CD Práctica Final DevOps
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,17 +6,23 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Run unit tests
-        run: echo "Running unit tests (example)"
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
 
-      - name: Build Docker container
-        run: |
-          docker build -t practica-final-devops .
-          docker run -d -p 8080:80 practica-final-devops
+    - name: Move HTML to root
+      run: cp src/index.html ./index.html
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
