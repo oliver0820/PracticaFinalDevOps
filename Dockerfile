@@ -1,10 +1,10 @@
-# Usar imagen base de nginx
+# Usa la imagen base de nginx
 FROM nginx:latest
 
-# Eliminar archivos predeterminados de Nginx
+# Elimina los archivos predeterminados de nginx
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copiar la página HTML personalizada
+# Copia tu página personalizada
 COPY src/ /usr/share/nginx/html/
 
 # Exponer el puerto 80
